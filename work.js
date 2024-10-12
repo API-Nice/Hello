@@ -9,10 +9,11 @@ export default {
       newUrl.search = originalUrl.search;
     }
     
-    // 使用新的 URL 来创建一个带有正确 Host 头的新请求
-    const modifiedRequest = new Request(newUrl.toString(), request); // 这会复制原始请求的所有属性，包括 headers 和 body
-    
-    // 发送修改后的请求
-    return fetch(modifiedRequest, { method: request.method, body: request.body });
+    // 直接使用新的 URL 来发送请求
+    return fetch(newUrl.toString(), {
+      method: request.method,
+      headers: request.headers,
+      body: request.body,
+    });
   },
 };
