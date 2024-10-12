@@ -1,26 +1,62 @@
 export default {
   async fetch(request) {
-    const newUrl = new URL('https://generativelanguage.googleapis.com');
-    const originalUrl = new URL(request.url);
+    try {
+      const targetUrl = 'https://generativelanguage.googleapis.com/v1beta/models';
+      const modifiedRequest = createModifiedRequest(request, targetUrl);
+      
+      // 打印调试信息
+      console.log('Original Request URL:', request.url);
+      console.log('Modified Request URL:', modifiedRequest.url);
+      console.log('Modified Request Headers:', modifiedRequest.headers);
+      
+      const response = await fetch(modifiedRequest);
+      
+      // 打印调试信息
+      console.log('Response Status:', response.status);
+      console.log('Response Headers:', response.headers);
+      
+      return createModifiedResponse(response);
+    } catch (error) {
+      console.error('Error during fetch:', error);
+      return new Response('Internal Server Error', { status: 500 });
+    }
+  },
+};
 
-    // 将查询参数从原始 URL 附加到新 URL 上
+function createModifiedRequest(request, targetUrl) {
+  try {
+    const originalUrl = new URL(request.url);
+    const newUrl = new URL(targetUrl);
+    
+    // 将原始请求的查询参数附加到新 URL 上
     if (originalUrl.search) {
       newUrl.search = originalUrl.search;
     }
-
-    // 创建一个新的 Headers 对象，复制原有的 headers 并添加 Host 头
-    const headers = new Headers(request.headers);
-    headers.set('Host', newUrl.host);
-
-    // 创建一个带有正确 Host 头的新请求
-    const modifiedRequest = new Request(newUrl.toString(), {
+    
+    // 创建带有正确 Host 头的新请求
+    return new Request(newUrl.toString(), {
       method: request.method,
-      headers: headers,
+      headers: request.headers,
       body: request.body,
-      redirect: 'follow' // 确保跟随重定向
+      redirect: 'follow', // 确保重定向行为一致
     });
+  } catch (error) {
+    console.error('Error in createModifiedRequest:', error);
+    throw error;
+  }
+}
 
-    // 发送修改后的请求
-    return fetch(modifiedRequest);
-  },
-};
+function createModifiedResponse(response) {
+  try {
+    // 如果需要，可以在这里对响应进行处理
+    // 例如，修改响应头或响应体
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+    });
+  } catch (error) {
+    console.error('Error in createModifiedResponse:', error);
+    throw error;
+  }
+}
