@@ -1,7 +1,7 @@
 export default {
   async fetch(request) {
     try {
-      const targetUrl = 'https://generativelanguage.googleapis.com/v1beta/models';
+      const targetUrl = 'https://generativelanguage.googleapis.com';
       const modifiedRequest = createModifiedRequest(request, targetUrl);
       
       // 打印调试信息
