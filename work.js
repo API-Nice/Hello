@@ -1,62 +1,18 @@
 export default {
   async fetch(request) {
-    try {
-      const targetUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyAIA3Xk_DyZJCOC6PE6uTNqZe_a4kdchpk';
-      const modifiedRequest = createModifiedRequest(request, targetUrl);
-      
-      // 打印调试信息
-      console.log('Original Request URL:', request.url);
-      console.log('Modified Request URL:', modifiedRequest.url);
-      console.log('Modified Request Headers:', modifiedRequest.headers);
-      
-      const response = await fetch(modifiedRequest);
-      
-      // 打印调试信息
-      console.log('Response Status:', response.status);
-      console.log('Response Headers:', response.headers);
-      
-      return createModifiedResponse(response);
-    } catch (error) {
-      console.error('Error during fetch:', error);
-      return new Response('Internal Server Error', { status: 500 });
-    }
-  },
-};
-
-function createModifiedRequest(request, targetUrl) {
-  try {
-    const originalUrl = new URL(request.url);
-    const newUrl = new URL(targetUrl);
+    // 创建一个新的 URL 对象，其中包含想要转发的目标 URL
+    const newUrl = new URL('https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent');
     
-    // 将原始请求的查询参数附加到新 URL 上
+    // 如果原始请求有查询参数，我们需要将其附加到新 URL 上
+    const originalUrl = new URL(request.url);
     if (originalUrl.search) {
       newUrl.search = originalUrl.search;
     }
     
-    // 创建带有正确 Host 头的新请求
-    return new Request(newUrl.toString(), {
-      method: request.method,
-      headers: request.headers,
-      body: request.body,
-      redirect: 'follow', // 确保重定向行为一致
-    });
-  } catch (error) {
-    console.error('Error in createModifiedRequest:', error);
-    throw error;
-  }
-}
-
-function createModifiedResponse(response) {
-  try {
-    // 如果需要，可以在这里对响应进行处理
-    // 例如，修改响应头或响应体
-    return new Response(response.body, {
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-    });
-  } catch (error) {
-    console.error('Error in createModifiedResponse:', error);
-    throw error;
-  }
-}
+    // 使用新的 URL 来创建一个带有正确 Host 头的新请求
+    const modifiedRequest = new Request(newUrl.toString(), request); // 这会复制原始请求的所有属性，包括 headers 和 body
+    
+    // 发送修改后的请求
+    return fetch(modifiedRequest, { method: request.method, body: request.body });
+  },
+};
