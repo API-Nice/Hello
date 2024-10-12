@@ -1,68 +1,50 @@
 <!DOCTYPE html>
-<html lang   朗="en"   " ' ">
+<html lang="zh-CN">
 <head>
-    <meta charset   字符集="UTF-8"   “utf - 8”>
-    <meta name   名字="viewport"   “视口” content   内容="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
-    <style>
-        * {
-            margin   保证金: 0;
-            padding   填充: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLYF</title>
+<style>
+  body, h1 {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace;
+  }
 
-        body {
-            display   显示: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-            font-family: 'Arial'   “天线”, sans-serif;
-            color: #333;
-        }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #2d2d2d;
+    color: #cccccc;
+  }
 
-        .hello-world {
-            font-size: 4rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 2s ease-in-out;
-            background: linear-gradient   线性渐变(45deg   你, #ff6f61, #ffcc29);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            padding   填充: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
-        }
+  h1 {
+    font-size: 3rem;
+    text-align: center;
+    border-bottom: 2px solid ;
+    padding-bottom: 0.5rem;
+    opacity: 0; 
+    transform: translateY(-50px); 
+    animation: fadeInDown 1s ease-out forwards; 
+  }
 
-        .hello-world:hover {
-            transform: scale(1.1);
-        }
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+  }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hello-world {
-                font-size: 3rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hello-world {
-                font-size: 2rem;
-            }
-        }
-    </style>
+  @keyframes fadeInDown {
+    to {
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+</style>
 </head>
 <body>
-    <div class="hello-world">Hello World!</div>
+  <h1>Hello World!</h1>
 </body>
 </html>
