@@ -1,7 +1,7 @@
 export default {
   async fetch(request) {
     try {
-      const targetUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+      const targetUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyAIA3Xk_DyZJCOC6PE6uTNqZe_a4kdchpk';
       const modifiedRequest = createModifiedRequest(request, targetUrl);
       
       // 打印调试信息
