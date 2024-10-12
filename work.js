@@ -1,7 +1,7 @@
 export default {
   async fetch(request) {
     // 创建一个新的 URL 对象，其中包含想要转发的目标 URL
-    const newUrl = new URL('https://generativelanguage.googleapis.com/v1beta/models');
+    const newUrl = new URL('https://generativelanguage.googleapis.com');
     
     // 如果原始请求有查询参数，我们需要将其附加到新 URL 上
     const originalUrl = new URL(request.url);
